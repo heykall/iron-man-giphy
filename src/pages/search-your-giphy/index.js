@@ -48,23 +48,23 @@ const SearchYourGiphy = () => {
       </section>
 
       <section className="text-blueGray-700 ">
-        <div className="container items-center px-5 py-4 mx-auto lg:px-24">
-          <div className="flex flex-wrap mb-12 text-left">
-            {loading
-            ?
-              <SkeletonComponent/>
-            :
-            searchValue?.map((gif, index) => (
-              <div className="mx-auto w-1/3" key={index}>
-                  <div className="p-4">
-                    {<img className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" src={gif} alt="gif"/>}
-                  </div>
-                </div>
-            ))
-          }        
-          </div>
-        </div>
-      </section>
+            <div className="container items-center px-5 py-4 mx-auto lg:px-24">
+              <div className="flex flex-wrap mb-12 text-left">
+                {loading
+                ?
+                    <SkeletonComponent/>
+                :
+                searchValue?.map((gif, index) => (
+                  <div className="mx-auto w-1/3" key={index}>
+                      <div className="p-4">
+                        {<img className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" src={gif} alt="gif"/>}
+                      </div>
+                    </div>
+                ))
+              }        
+              </div>
+            </div>
+          </section>
     </>
   )
 }
