@@ -36,10 +36,7 @@ const SearchYourGiphy = () => {
               SEARCH YOUR GIPHY
             </h1>
           </div>
-        </div>
-      </section>
-
-      <form onSubmit={(handleSubmit)(onSubmit)} className="flex items-start w-full lg:mx-auto lg:justify-center lg:w-1/2">
+        <form onSubmit={(handleSubmit)(onSubmit)} className="flex items-start w-full lg:mx-auto lg:justify-center lg:w-1/2">
           <input
             type="text"
             name="keywords"
@@ -48,12 +45,16 @@ const SearchYourGiphy = () => {
             {...register("keywords", { required: true })}
           />
           <button
-            className="flex items-center px-6 py-2 mt-auto font-semibold text-white transition duration-500 ease-in-out transform bg-red-300 rounded-lg hover:bg-red-500 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
+            className="flex px-6 py-2 mt-1 font-semibold text-white transition duration-500 ease-in-out transform bg-red-300 rounded-lg hover:bg-red-500 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
             type="submit"
           >
             Search
           </button>
         </form>
+        </div>
+      </section>
+
+      
 
       <section className="text-blueGray-700 ">
             <div className="container items-center px-5 py-4 mx-auto lg:px-24">
