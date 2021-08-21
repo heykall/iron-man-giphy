@@ -40,10 +40,11 @@ export function fetchIronMan() {
     try {
       const { data } = await axios({
         method: 'GET',
-        url: 'https://api.giphy.com/v1/gifs/trending',
+        url: 'https://api.giphy.com/v1/gifs/search',
         params: {
           api_key: 'oh8q01YsX36GyJqbzddrAqqvf7dEiVrM',
           limit: 9,
+          q: 'iron man',
         },
       })
 
@@ -63,6 +64,7 @@ export function fetchIronMan() {
 export function fetchSearch(keywords) {
   return async (dispatch) => {
     try {
+      dispatch(setLoading(true))
       const { data } = await axios({
         method: 'GET',
         url: 'https://api.giphy.com/v1/gifs/search',
@@ -76,7 +78,8 @@ export function fetchSearch(keywords) {
       const searchGifs = data.data.map(gif => {
           return gif.images.fixed_height.url
       })
-      return dispatch(setSearch(searchGifs));
+      dispatch(setSearch(searchGifs));
+      return searchGifs
     } catch (error) {
       dispatch(setError(error))
     } finally {

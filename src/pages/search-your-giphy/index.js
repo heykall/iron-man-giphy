@@ -1,28 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { fetchSearch, setLoading } from "../../store/actions/actionCreator"
+import React from 'react';
+import { fetchSearch } from "../../store/actions/actionCreator"
 import { useDispatch, useSelector } from "react-redux"
 import { useForm } from 'react-hook-form'
+import SkeletonComponent from '../../components/skeleton'
 
 const SearchYourGiphy = () => {
-  const [gifs, setGifs] = useState([])
   const dispatch = useDispatch()
-  const searchValue = useSelector((state => state.searchReducer.search))
-  const error = useSelector((state) => state.ironManReducer.error)
-  
-  useEffect(() => {
-    dispatch(setLoading(true))
-  },[dispatch]);
+  const {search: searchValue, loading, error} = useSelector((state => state.searchReducer))
   
   const {
     register,
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (search) => {
-    dispatch(fetchSearch(search));
-    setGifs(searchValue)
+  const onSubmit = async (search) => {
+    await dispatch(fetchSearch(search));
   };
-
 
   if (error) {
     return <h1>ERROR ...</h1>
@@ -54,27 +47,24 @@ const SearchYourGiphy = () => {
         </div>
       </section>
 
-      
-
       <section className="text-blueGray-700 ">
-            <div className="container items-center px-5 py-4 mx-auto lg:px-24">
-              <div className="flex flex-wrap mb-12 text-left">
-                {gifs.length
-                ? 
-                gifs.map((gif, index) => (
-                  <div className="mx-auto w-1/3" key={index}>
-                      <div className="p-4">
-                        {<img className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" src={gif} alt="gif"/>}
-                      </div>
-                    </div>
-                ))
-                :
-                <>
-                  </>
-              }        
-              </div>
-            </div>
-          </section>
+        <div className="container items-center px-5 py-4 mx-auto lg:px-24">
+          <div className="flex flex-wrap mb-12 text-left">
+            {loading
+            ?
+              <SkeletonComponent/>
+            :
+            searchValue?.map((gif, index) => (
+              <div className="mx-auto w-1/3" key={index}>
+                  <div className="p-4">
+                    {<img className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" src={gif} alt="gif"/>}
+                  </div>
+                </div>
+            ))
+          }        
+          </div>
+        </div>
+      </section>
     </>
   )
 }

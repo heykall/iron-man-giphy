@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { fetchIronMan, setLoading } from "../../store/actions/actionCreator"
 import { useDispatch, useSelector } from "react-redux"
-import Skeleton from 'react-loading-skeleton'
+import SkeletonComponent from '../../components/skeleton'
 
 const IronManGiphy = () => {
   const dispatch = useDispatch()
@@ -30,69 +30,23 @@ if (error) {
         </div>
       </section>
       <section className="text-blueGray-700 ">
-            <div className="container items-center px-5 py-4 mx-auto lg:px-24">
-              <div className="flex flex-wrap mb-12 text-left">
-                {loading
-                ? 
-                  <>
-                    <div className="mx-auto w-1/3">
-                        <div className="p-4">
-                          <Skeleton  duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                        </div>
-                      </div>
-                    <div className="mx-auto w-1/3">
-                        <div className="p-4">
-                          <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                        </div>
-                      </div>
-                    <div className="mx-auto w-1/3">
-                      <div className="p-4">
-                        <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                      </div>
-                    </div>
-                    <div className="mx-auto w-1/3">
-                        <div className="p-4">
-                          <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                        </div>
-                      </div>
-                    <div className="mx-auto w-1/3">
-                        <div className="p-4">
-                          <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                        </div>
-                      </div>
-                    <div className="mx-auto w-1/3">
-                      <div className="p-4">
-                        <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                      </div>
-                    </div>
-                    <div className="mx-auto w-1/3">
-                      <div className="p-4">
-                        <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                      </div>
-                    </div>
-                    <div className="mx-auto w-1/3">
-                      <div className="p-4">
-                        <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                      </div>
-                    </div>
-                    <div className="mx-auto w-1/3">
-                      <div className="p-4">
-                        <Skeleton duration={2} className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" />
-                      </div>
-                    </div>
-                  </>
-                :
-                ironMan.map((gif, index) => (
-                  <div className="mx-auto w-1/3" key={index}>
-                      <div className="p-4">
-                        {<img className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" src={gif} alt="gif"/>}
-                      </div>
-                    </div>
-                ))
-              }        
-              </div>
-            </div>
-          </section>
+        <div className="container items-center px-5 py-4 mx-auto lg:px-24">
+          <div className="flex flex-wrap mb-12 text-left">
+            {loading
+            ? 
+              <SkeletonComponent/>
+            :
+            ironMan.map((gif, index) => (
+              <div className="mx-auto w-1/3" key={index}>
+                  <div className="p-4">
+                    {<img className="object-fit rounded-md object-center w-40 h-24 sm:w-full mb-4 lg:h-48 xl:h-30  2xl:h-48 md:h-36" src={gif} alt="gif"/>}
+                  </div>
+                </div>
+            ))
+          }        
+          </div>
+        </div>
+      </section>
     </>
   )
 }
