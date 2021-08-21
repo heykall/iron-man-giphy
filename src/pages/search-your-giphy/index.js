@@ -1,26 +1,47 @@
 import React, { useState, useEffect } from 'react';
-import { fetchSearch, setLoading } from "../../store/actions/actionCreator"
+import { setLoading } from "../../store/actions/actionCreator"
 import { useDispatch, useSelector } from "react-redux"
 import { useForm } from 'react-hook-form'
+import axios from 'axios'
 
 const SearchYourGiphy = () => {
   const [gifs, setGifs] = useState([])
   const dispatch = useDispatch()
-  const searchValue = useSelector((state => state.searchReducer.search))
+  const [searchString, setSearchString] = useState('')
   const error = useSelector((state) => state.ironManReducer.error)
   
   useEffect(() => {
     dispatch(setLoading(true))
-  },[dispatch]);
+  },[dispatch, gifs]);
   
+  const handleChange= (e) => {
+    setSearchString(e)
+  }
+
   const {
-    register,
     handleSubmit,
   } = useForm();
 
-  const onSubmit = (search) => {
-    dispatch(fetchSearch(search));
-    setGifs(searchValue)
+
+  const onSubmit = async () => {
+    try {
+      const { data } = await axios({
+        method: 'GET',
+        url: 'https://api.giphy.com/v1/gifs/search',
+        params: {
+          api_key: 'oh8q01YsX36GyJqbzddrAqqvf7dEiVrM',
+          limit: 9,
+          q: searchString,
+        },
+      })
+
+      const searchGifs = data.data.map(gif => {
+          return gif.images.fixed_height.url
+      })
+      setGifs(searchGifs)
+    } catch (error) {
+      console.log(error);
+    }
   };
 
 
@@ -38,11 +59,12 @@ const SearchYourGiphy = () => {
           </div>
         <form onSubmit={(handleSubmit)(onSubmit)} className="flex items-start w-full lg:mx-auto lg:justify-center lg:w-1/2">
           <input
+            onChange={(e) => handleChange(e.target.value)}
             type="text"
             name="keywords"
+            value={searchString}
             placeholder="Search Giphy"
             className="flex-grow w-full px-4 py-2 mb-4 mr-4 text-base border-4 text-black transition duration-650 ease-in-out transform  0 sm:mb-0 focus:shadow-outline"
-            {...register("keywords", { required: true })}
           />
           <button
             className="flex px-6 py-2 mt-1 font-semibold text-white transition duration-500 ease-in-out transform bg-red-300 rounded-lg hover:bg-red-500 focus:shadow-outline focus:outline-none focus:ring-2 ring-offset-current ring-offset-2"
@@ -53,8 +75,6 @@ const SearchYourGiphy = () => {
         </form>
         </div>
       </section>
-
-      
 
       <section className="text-blueGray-700 ">
             <div className="container items-center px-5 py-4 mx-auto lg:px-24">
